@@ -1,0 +1,237 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 805306368 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3600), pid=32280, tid=15752
+#
+# JRE version:  (21.0.1+12) (build )
+# Java VM: OpenJDK 64-Bit Server VM (21.0.1+12-29, mixed mode, emulated-client, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -XX:TieredStopAtLevel=1 -Dspring.output.ansi.enabled=always -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dmanagement.endpoints.jmx.exposure.include=* -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.2\lib\idea_rt.jar=56878:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.2\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 finchainstorage.gateway.GatewayServices
+
+Host: AMD Ryzen 5 5600 6-Core Processor              , 12 cores, 47G,  Windows 11 , 64 bit Build 22621 (10.0.22621.3235)
+Time: Wed Mar  6 13:40:12 2024 GMT Standard Time elapsed time: 0.023731 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001cfaacc5480):  JavaThread "Unknown thread" [_thread_in_vm, id=15752, stack(0x000000af72b00000,0x000000af72c00000) (1024K)]
+
+Stack: [0x000000af72b00000,0x000000af72c00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6c9029]
+V  [jvm.dll+0x854b81]
+V  [jvm.dll+0x856e5e]
+V  [jvm.dll+0x857543]
+V  [jvm.dll+0x280c06]
+V  [jvm.dll+0x6c5715]
+V  [jvm.dll+0x6ba10a]
+V  [jvm.dll+0x3557ea]
+V  [jvm.dll+0x35d436]
+V  [jvm.dll+0x3ae1be]
+V  [jvm.dll+0x3ae468]
+V  [jvm.dll+0x3291fc]
+V  [jvm.dll+0x329d8b]
+V  [jvm.dll+0x81d179]
+V  [jvm.dll+0x3bb4f1]
+V  [jvm.dll+0x805ae8]
+V  [jvm.dll+0x44effe]
+V  [jvm.dll+0x450901]
+C  [jli.dll+0x52a3]
+C  [ucrtbase.dll+0x29363]
+C  [KERNEL32.DLL+0x1257d]
+C  [ntdll.dll+0x5aa58]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffda0c89b88, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+  0x000001cfaad1ab20 WorkerThread "GC Thread#0"                     [id=15220, stack(0x000000af72c00000,0x000000af72d00000) (1024K)]
+  0x000001cfaad27c40 ConcurrentGCThread "G1 Main Marker"            [id=8956, stack(0x000000af72d00000,0x000000af72e00000) (1024K)]
+  0x000001cfaad296f0 WorkerThread "G1 Conc#0"                       [id=27672, stack(0x000000af72e00000,0x000000af72f00000) (1024K)]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffda03fc2c7]
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007ffda0cfa6f8] Heap_lock - owner thread: 0x000001cfaacc5480
+
+Heap address: 0x0000000501800000, size: 12264 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 64 size 144 Howl #buckets 8 coarsen threshold 14745 Howl Bitmap #cards 2048 size 272 coarsen threshold 1843 Card regions per heap region 1 cards per card region 16384
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000501800000, 0x0000000800000000)
+  region size 8192K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffda07e1be9]
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.006 Loaded shared library C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff68a100000 - 0x00007ff68a10e000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\java.exe
+0x00007ffe074d0000 - 0x00007ffe076e6000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ffdc12d0000 - 0x00007ffdc12e9000 	C:\Program Files\AVG\Antivirus\aswhook.dll
+0x00007ffe05250000 - 0x00007ffe05314000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ffe04ac0000 - 0x00007ffe04e66000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ffe04840000 - 0x00007ffe04951000 	C:\Windows\System32\ucrtbase.dll
+0x00007ffe018b0000 - 0x00007ffe018c8000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\jli.dll
+0x00007ffdfaaf0000 - 0x00007ffdfab0b000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\VCRUNTIME140.dll
+0x00007ffe072d0000 - 0x00007ffe0747d000 	C:\Windows\System32\USER32.dll
+0x00007ffe04e70000 - 0x00007ffe04e96000 	C:\Windows\System32\win32u.dll
+0x00007ffdf6500000 - 0x00007ffdf6793000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3235_none_270f74e173860f98\COMCTL32.dll
+0x00007ffe06a60000 - 0x00007ffe06a89000 	C:\Windows\System32\GDI32.dll
+0x00007ffe04f10000 - 0x00007ffe05028000 	C:\Windows\System32\gdi32full.dll
+0x00007ffe05380000 - 0x00007ffe05427000 	C:\Windows\System32\msvcrt.dll
+0x00007ffe04a20000 - 0x00007ffe04aba000 	C:\Windows\System32\msvcp_win.dll
+0x00007ffe05fe0000 - 0x00007ffe06011000 	C:\Windows\System32\IMM32.DLL
+0x00007ffe01ae0000 - 0x00007ffe01aec000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\vcruntime140_1.dll
+0x00007ffdafda0000 - 0x00007ffdafe2e000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\msvcp140.dll
+0x00007ffda00c0000 - 0x00007ffda0dd5000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\server\jvm.dll
+0x00007ffe06c30000 - 0x00007ffe06ce2000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ffe05a00000 - 0x00007ffe05aa8000 	C:\Windows\System32\sechost.dll
+0x00007ffe04810000 - 0x00007ffe04838000 	C:\Windows\System32\bcrypt.dll
+0x00007ffe05ac0000 - 0x00007ffe05bd5000 	C:\Windows\System32\RPCRT4.dll
+0x00007ffe057c0000 - 0x00007ffe05831000 	C:\Windows\System32\WS2_32.dll
+0x00007ffe03660000 - 0x00007ffe036ad000 	C:\Windows\SYSTEM32\POWRPROF.dll
+0x00007ffdfd0c0000 - 0x00007ffdfd0f4000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ffdf95b0000 - 0x00007ffdf95ba000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ffe03640000 - 0x00007ffe03653000 	C:\Windows\SYSTEM32\UMPDC.dll
+0x00007ffe03900000 - 0x00007ffe03918000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ffdffdc0000 - 0x00007ffdffdca000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\jimage.dll
+0x00007ffdf2190000 - 0x00007ffdf23c3000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ffe05c50000 - 0x00007ffe05fd8000 	C:\Windows\System32\combase.dll
+0x00007ffe056e0000 - 0x00007ffe057b7000 	C:\Windows\System32\OLEAUT32.dll
+0x00007ffdf1f30000 - 0x00007ffdf1f62000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ffe05030000 - 0x00007ffe050aa000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ffdfdf00000 - 0x00007ffdfdf0f000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\instrument.dll
+0x00007ffdf86d0000 - 0x00007ffdf86ef000 	C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\Lomax\.jdks\openjdk-21.0.1\bin;C:\Windows\SYSTEM32;C:\Program Files\AVG\Antivirus;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3235_none_270f74e173860f98;C:\Users\Lomax\.jdks\openjdk-21.0.1\bin\server
+
+VM Arguments:
+jvm_args: -XX:TieredStopAtLevel=1 -Dspring.output.ansi.enabled=always -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dmanagement.endpoints.jmx.exposure.include=* -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.2\lib\idea_rt.jar=56878:C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.2\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 
+java_command: finchainstorage.gateway.GatewayServices
+java_class_path (initial): \\wsl$\Ubuntu-20.04\home\lomax_osomba\FinchainSystem\persistence-layer\build\classes\java\main;\\wsl$\Ubuntu-20.04\home\lomax_osomba\FinchainSystem\persistence-layer\build\resources\main;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.hyperledger.fabric\fabric-gateway-java\2.2.9\9a1bf8c5dfbdfada554e2132f58e8143716af24e\fabric-gateway-java-2.2.9.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.hyperledger.fabric-sdk-java\fabric-sdk-java\2.2.26\6f3d872f02c6f7753490458670709214f3a343e3\fabric-sdk-java-2.2.26.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.hyperledger.fabric\fabric-protos\0.1.6\4aabb22527a130d0807324ee61c6eaec87127797\fabric-protos-0.1.6.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-web\3.2.3\bf2b775d4f4e6349129c64de30939a5493779706\spring-boot-starter-web-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.10.1\b3add478d4382b78ea20b1671390a858002feb6c\gson-2.10.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.ibm.cloud\cloudant\0.8.1\7f2d75ca7ecbf2da6237d4547bfaf6dda3268980\cloudant-0.8.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-netty-shaded\1.61.1\9af2ddd02ccdc6080952e35c40dba019e24ce2f4\grpc-netty-shaded-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf\1.61.1\32f5cd638a8d7c7f5d1bcfd2e401e13057c97573\grpc-protobuf-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-stub\1.61.1\2f1d727d23d5fafe88190c4b70543951f75cc523\grpc-stub-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry.proto\opentelemetry-proto\1.1.0-alpha\ed3bcaa228784b7fce6dab53cb4101d90744472\opentelemetry-proto-1.1.0-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.protobuf\protobuf-java\3.25.3\d3200261955f3298e0d85c9892201e70492ce8eb\protobuf-java-3.25.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.bouncycastle\bcpkix-jdk18on\1.77\ed953791ba0229747dd0fd9911e3d76a462acfd3\bcpkix-jdk18on-1.77.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.bouncycastle\bcprov-jdk18on\1.77\2cc971b6c20949c1ff98d1a4bc741ee848a09523\bcprov-jdk18on-1.77.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpclient\4.5.14\1194890e6f56ec29177673f2f12d0b8e627dec98\httpclient-4.5.14.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.3.0\f5e064b541f5c5fbc5e4fb49c4e8cd4eabb3afd6\commons-logging-1.3.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\commons-cli\commons-cli\1.6.0\38166a23afb5bd5520f739b87b3be87f7f0fb96d\commons-cli-1.6.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-compress\1.26.0\659feffdd12280201c8aacb8f7be94f9a883c824\commons-compress-1.26.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\commons-io\commons-io\2.15.1\f11560da189ab563a5c8e351941415430e9304ea\commons-io-2.15.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-core\2.21.1\eba8eac8d464791c84e4bafa0fea7cdf7113168\log4j-core-2.21.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-1.2-api\2.21.1\e01395d68fb94faa1fbf8188072549e75d309b9e\log4j-1.2-api-2.21.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.spotify\futures-extra\4.3.3\cf563103df66481f8e1111e3a01fbd11e2fb6bf5\futures-extra-4.3.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.api\api-common\2.26.0\faa30346f961188c1f3b48aadcd61140b81b93f9\api-common-2.26.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.glassfish\javax.json\1.1.4\943f240a509d3c70b448a55c6735591ecbd37c88\javax.json-1.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.yaml\snakeyaml\2.2\3af797a25458550a16bf89acc8e4ab2b7f2bfce0\snakeyaml-2.2.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.miracl.milagro.amcl\milagro-crypto-java\0.4.0\ebe6bca0c7a1b82dac212c042b4840da6fb51120\milagro-crypto-java-0.4.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\javax.xml.bind\jaxb-api\2.3.1\8531ad5ac454cc2deb9d4d32c40c4d7451939b5d\jaxb-api-2.3.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-extension-autoconfigure\1.31.0\178efb4a6102afa581307038f609324ed4418025\opentelemetry-sdk-extension-autoconfigure-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk\1.31.0\2b2093be08a09ac536292bf6cecf8129cc7fb191\opentelemetry-sdk-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-exporter-otlp\1.31.0\b6454464425dfd81519070caeca3824558a2f1ae\opentelemetry-exporter-otlp-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-trace\1.31.0\a3941197cfb8ae9eb9e482073480c0c3918b746c\opentelemetry-sdk-trace-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-extension-trace-propagators\1.31.0\2d1368025d524438e4d0cf0a98ad1c75f17adf4b\opentelemetry-extension-trace-propagators-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry.instrumentation\opentelemetry-grpc-1.6\1.32.1-alpha\612a80d44362f7f66b2af9f46eaf9ab35a4a2c76\opentelemetry-grpc-1.6-1.32.1-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-api\1.31.0\bb24a44d73484c681c236aed84fe6c28d17f30e2\opentelemetry-api-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.api.grpc\proto-google-common-protos\2.29.0\eb1cf1cf4c12d5eb9cef958dfd76af4101c55a62\proto-google-common-protos-2.29.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\32.1.3-jre\f306708742ce2bf0fb0901216183bc14073feae\guava-32.1.3-jre.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-api\1.61.1\25fe74319bbe7a503f18b8380ac2e4e03c207cc1\grpc-api-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-json\3.2.3\c71ec683425f09b7a213358d3b22959d929d1108\spring-boot-starter-json-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter\3.2.3\15f3e03b0fd9570f90bdce9651610cc152534cf4\spring-boot-starter-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-tomcat\3.2.3\ac392404d41766194b8fce6834c71879f9e8f479\spring-boot-starter-tomcat-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-webmvc\6.1.4\e7aad7c53e05c8772209e915029e121262a7bc33\spring-webmvc-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-web\6.1.4\b237532e03330a7cf8f66dc147e62bbbe44c702f\spring-web-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.ibm.cloud\cloudant-common\0.8.1\af7c1c287a3f50538ba3309e6f421351737b2eee\cloudant-common-0.8.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.ibm.cloud\sdk-core\9.19.0\c98017c9c0d2ac343c246f3b9a72c97989477cb3\sdk-core-9.19.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-core\1.61.1\698d21194107fccc538a943771fae77c5f13a500\grpc-core-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.2\25ea2e8b0c338a877313bd4672d3fe056ea78f0d\jsr305-3.0.2.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.bouncycastle\bcutil-jdk18on\1.77\de3eaef351545fe8562cf29ddff4a403a45b49b7\bcutil-jdk18on-1.77.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.4.16\51cf043c87253c9f58b539c9f7e44c8894223850\httpcore-4.4.16.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.16.1\47bd4d333fba53406f6c6c51884ddbca435c8862\commons-codec-1.16.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-lang3\3.13.0\b7263237aa89c1f99b327197c41d0669707a462e\commons-lang3-3.13.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-api\2.21.1\74c65e87b9ce1694a01524e192d7be989ba70486\log4j-api-2.21.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.auto.value\auto-value-annotations\1.10.4\9679de8286eb0a151db6538ba297a8951c4a1224\auto-value-annotations-1.10.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\javax.annotation\javax.annotation-api\1.3.2\934c04d3cfef185a8008e7bf34331b79730a9d43\javax.annotation-api-1.3.2.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.errorprone\error_prone_annotations\2.24.1\32b299e45105aa9b0df8279c74dc1edfcf313ff0\error_prone_annotations-2.24.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-math3\3.6.1\e4ba98f1d4b3c80ec46392f25e094a6a2e58fcbf\commons-math3-3.6.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\javax.activation\javax.activation-api\1.2.0\85262acf3ca9816f9537ca47d5adeabaead7cb16\javax.activation-api-1.2.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-extension-autoconfigure-spi\1.31.0\80acc40893fd00b56eee2acd145dbbd560173265\opentelemetry-sdk-extension-autoconfigure-spi-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-metrics\1.31.0\47cc23762fae728d68e4fda1dfb71986ae0b8b3e\opentelemetry-sdk-metrics-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-logs\1.31.0\a63a203d3dc6f8875f8c26b9e3b522dc9a3f6280\opentelemetry-sdk-logs-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-sdk-common\1.31.0\f492528288236e097e12fc1c45963dd82c70d33c\opentelemetry-sdk-common-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry.instrumentation\opentelemetry-instrumentation-api-semconv\1.32.1-alpha\65a12d69ce0aaff0a69823f8898228337eb84e68\opentelemetry-instrumentation-api-semconv-1.32.1-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry.instrumentation\opentelemetry-instrumentation-api\1.32.1\2f94d6b869e619b24db4569f0a29bb2deb8a365\opentelemetry-instrumentation-api-1.32.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-context\1.31.0\b8004737f7a970124e36ac71fde8eb88423e8cee\opentelemetry-context-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.guava\failureaccess\1.0.1\1dcf1de382a0bf95a3d8b0849546c88bac1292c9\failureaccess-1.0.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\b421526c5f297295adef1c886e5246c39d4ac629\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.checkerframework\checker-qual\3.37.0\ba74746d38026581c12166e164bb3c15e90cc4ea\checker-qual-3.37.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.j2objc\j2objc-annotations\2.8\c85270e307e7b822f1086b93689124b89768e273\j2objc-annotations-2.8.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.datatype\jackson-datatype-jsr310\2.15.4\7de629770a4559db57128d35ccae7d2fddd35db3\jackson-datatype-jsr310-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.module\jackson-module-parameter-names\2.15.4\e654497a08359db2521b69b5f710e00836915d8c\jackson-module-parameter-names-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.datatype\jackson-datatype-jdk8\2.15.4\694777f182334a21bf1aeab1b04cc4398c801f3f\jackson-datatype-jdk8-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.15.4\560309fc381f77d4d15c4a4cdaa0db5025c4fd13\jackson-databind-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-logging\3.2.3\c186015229d7f5cbd30ea99bf903a8cede6d849f\spring-boot-starter-logging-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-autoconfigure\3.2.3\59db74eb4196885bb5a149417ab1ab51dc9b6952\spring-boot-autoconfigure-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot\3.2.3\b4aa6e3fdc4078fee4a4b9d702d9cc64e3fad1d4\spring-boot-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\jakarta.annotation\jakarta.annotation-api\2.1.1\48b9bda22b091b1f48b13af03fe36db3be6e1ae3\jakarta.annotation-api-2.1.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-core\6.1.4\3b4dde8f55c3d5d4e948de64b866d7bb27e5a8d4\spring-core-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-websocket\10.1.19\adf4710fac2471236f8a466ca678cdf7e6a8257c\tomcat-embed-websocket-10.1.19.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-core\10.1.19\3dbbca8acbd4dd6a137c3d6f934a2931512b42ce\tomcat-embed-core-10.1.19.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-el\10.1.19\c61a582c391aca130884a5421deedfe1a96c7415\tomcat-embed-el-10.1.19.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-context\6.1.4\765316bef55e41e4523f9b2780b8721ce5dd0fe2\spring-context-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-aop\6.1.4\26ae2c9e7f69b0235a2faca1c58416c51eaebef6\spring-aop-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-beans\6.1.4\e311cc9937d522a1051622580b4a2c250fc74164\spring-beans-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-expression\6.1.4\a1f2e3af83c7222b7f95f68a8e0666fdcceb35e1\spring-expression-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.micrometer\micrometer-observation\1.12.3\105f768c211564fcebe4d79419bda4ebef0d0ac7\micrometer-observation-1.12.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\logging-interceptor\4.12.0\e922c1f14d365c0f2bed140cc0825e18462c2778\logging-interceptor-4.12.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp-urlconnection\4.12.0\f182bfa2eaca0bb8086904c8b5710976e5b55d65\okhttp-urlconnection-4.12.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\4.12.0\2f4525d4a200e97e1b87449c2cd9bd2e25b7e8cd\okhttp-4.12.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.reactivex.rxjava2\rxjava\2.2.21\6f13f24c44567fc660aab94d639cda9f0fe95628\rxjava-2.2.21.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib\1.9.22\d6c44cd08d8f3f9bece8101216dbe6553365c6e3\kotlin-stdlib-1.9.22.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib-jdk8\1.9.22\dea0c11e2fa503ab891c8a090e3b54754472975d\kotlin-stdlib-jdk8-1.9.22.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry.semconv\opentelemetry-semconv\1.21.0-alpha\207660e74d1e155272e9559fd4d27854b92fc6ac\opentelemetry-semconv-1.21.0-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.15.4\5223ea5a9bf52cdc9c5e537a0e52f2432eaf208b\jackson-annotations-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.15.4\aebe84b45360debad94f692a4074c6aceb535fa0\jackson-core-2.15.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-to-slf4j\2.21.1\d77b2ba81711ed596cd797cc2b5b5bd7409d841c\log4j-to-slf4j-2.21.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-classic\1.4.14\d98bc162275134cdf1518774da4a2a17ef6fb94d\logback-classic-1.4.14.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.slf4j\jul-to-slf4j\2.0.12\eb5f48f782b41cc881b0bf1fb4d88ae2ff6d5b93\jul-to-slf4j-2.0.12.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework\spring-jcl\6.1.4\a244bd674a5431dfdce68d28cdf857104e6fff67\spring-jcl-6.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.micrometer\micrometer-commons\1.12.3\83add2dda5cdc811fefb83e858c7412a176fe5b1\micrometer-commons-1.12.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.reactivestreams\reactive-streams\1.0.4\3864a1320d97d7b045f729a326e1e077661f31b7\reactive-streams-1.0.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations\13.0\919f0dfe192fb4e063e7dacadee7f8bb9a2672a9\annotations-13.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib-jdk7\1.9.22\c4b17283ad7939e778989663f8301d871987fa5e\kotlin-stdlib-jdk7-1.9.22.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.slf4j\slf4j-api\2.0.12\48f109a2a6d8f446c794f3e3fa0d86df0cdfa312\slf4j-api-2.0.12.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-core\1.4.14\4d3c2248219ac0effeb380ed4c5280a80bf395e8\logback-core-1.4.14.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio-jvm\3.6.0\5600569133b7bdefe1daf9ec7f4abeb6d13e1786\okio-jvm-3.6.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-devtools\3.2.3\b474cd30a54aae2152ff6bc8a31378ee40237407\spring-boot-devtools-3.2.3.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.perfmark\perfmark-api\0.26.0\ef65452adaf20bf7d12ef55913aba24037b82738\perfmark-api-0.26.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-protobuf-lite\1.61.1\138738fae8ccc3c7cc3855fa4eb887dd8650569e\grpc-protobuf-lite-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-api-events\1.31.0-alpha\537183c5cd8fa7ebf520c0887c4ffb8a450913fe\opentelemetry-api-events-1.31.0-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-exporter-sender-okhttp\1.31.0\dd209381d58cfe81a989e29c9ca26d97c8dabd7a\opentelemetry-exporter-sender-okhttp-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-exporter-otlp-common\1.31.0\d8c22b6851bbc3dbf5d2387b9bde158ed5416ba4\opentelemetry-exporter-otlp-common-1.31.0.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-util\1.61.1\60e7e4eb7eeb7dd72fe334b991a51ff4eb292982\grpc-util-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.grpc\grpc-context\1.61.1\c5b511caacce92a3c704bafe71824f349e3bab71\grpc-context-1.61.1.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\com.google.android\annotations\4.1.1.4\a1678ba907bf92691d879fef34e1a187038f9259\annotations-4.1.1.4.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\org.codehaus.mojo\animal-sniffer-annotations\1.23\3c0daebd5f0e1ce72cc50c818321ac957aeb5d70\animal-sniffer-annotations-1.23.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-extension-incubator\1.34.1-alpha\9201e6a43a0a89515626f7516c7d1b2c349f76df\opentelemetry-extension-incubator-1.34.1-alpha.jar;\\wsl$\Ubuntu-20.04\home\lomax_osomba\.gradle\caches\modules-2\files-2.1\io.opentelemetry\opentelemetry-exporter-common\1.31.0\b7b4baf5f9af72d5eb8a231dfb114ae31c57150d\opentelemetry-exporter-common-1.31.0.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 3                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 10                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 8388608                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 805306368                                 {product} {ergonomic}
+     bool ManagementServer                         = true                                      {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 12859736064                               {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 8388608                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 4096                                   {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 0                                      {pd product} {ergonomic}
+     bool ProfileInterpreter                       = false                                  {pd product} {command line}
+    uintx ProfiledCodeHeapSize                     = 0                                      {pd product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 12859736064                            {manageable} {ergonomic}
+     intx TieredStopAtLevel                        = 1                                         {product} {command line}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk-21
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Users\Lomax\oracles\19\dbhome_1\bin;C:\Users\Lomax\oracle19c\bin;C:\Users\Lomax\Apps\WINDOWS.X64_193000_db_home\bin;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Java\jdk-21\;C:\Users\Lomax\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\Lomax\AppData\Local\Programs\Python\Python312\;C:\Users\Lomax\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.2\bin;C:\Users\Lomax\Apps\apache-maven-3.9.5-bin\apache-maven-3.9.5\bin;;C:\Users\Lomax\.dotnet\tools;C:\ProgramData\Microsoft VS Code\bin;C:\Users\Lomax\AppData\Roaming\npm;C:\Program Files\nodejs;C:\Program Files\Java\jdk-21;
+USERNAME=Lomax
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD
+TMP=C:\Users\Lomax\AppData\Local\Temp
+TEMP=C:\Users\Lomax\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.3235)
+OS uptime: 0 days 22:19 hours
+Hyper-V role detected
+
+CPU: total 12 (initial active 12) (12 cores per cpu, 2 threads per core) family 25 model 33 stepping 2 microcode 0x0, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, hv, rdtscp, rdpid, fsrm, f16c, cet_ss
+Processor Information for all 12 processors :
+  Max Mhz: 3501, Current Mhz: 3501, Mhz Limit: 3501
+
+Memory: 4k page, system-wide physical 49034M (25454M free)
+TotalPageFile size 65418M (AvailPageFile size 512M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 60M, peak: 828M
+
+vm_info: OpenJDK 64-Bit Server VM (21.0.1+12-29) for windows-amd64 JRE (21.0.1+12-29), built on 2023-10-05T13:27:09Z by "mach5one" with MS VC++ 17.1 (VS2022)
+
+END.

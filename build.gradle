@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.3'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'checkstyle'
+
+}
+
+group = 'finchain-storage'
+version = '1.0-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+	maven {
+		url 'https://plugins.gradle.org/m2/'
+	}
+	maven {
+		url 'https://jitpack.io'
+
+	}
+
+}
+
+dependencies {
+
+	implementation group: 'org.hyperledger.fabric', name: 'fabric-gateway-java', version: '2.2.+'
+	implementation group: 'org.hyperledger.fabric-sdk-java', name: 'fabric-sdk-java', version: '2.2.26'
+	implementation 'org.hyperledger.fabric:fabric-protos:0.1.+'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.json:json:+'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+}
+checkstyle {
+	toolVersion = '10.3.3'
+	configFile = file("config/checkstyle/checkstyle.xml") as File
+	ignoreFailures = false // Set to true if you want the build to pass even if there are Checkstyle violations
+
+	configProperties = [
+			'suppressionFile': file("config/checkstyle/suppressions.xml").absolutePath
+	]
+}
+checkstyleMain {
+	source ='src/main/java/finchainstorage.gateway'
+}
+
+checkstyleTest {
+	source ='src/test/java/finchainstorage.gateway'
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation" << "-parameters"
+	options.release.set(17)
+}
+
+
