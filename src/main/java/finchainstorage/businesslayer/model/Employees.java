@@ -8,9 +8,6 @@ import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 
 @Getter
 public class Employees {
@@ -29,22 +26,6 @@ public class Employees {
         this.name = name;
         this.password = password;
         this.recoveryPhrase = recoveryPhrase;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getRecoveryPhrase() {
-        return recoveryPhrase;
     }
 
     public static Employees deserialize(final byte[] employeeJSON) {

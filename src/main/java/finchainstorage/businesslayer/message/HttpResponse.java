@@ -1,7 +1,6 @@
 package finchainstorage.businesslayer.message;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
 import org.springframework.http.HttpStatus;
 import java.util.Map;
 

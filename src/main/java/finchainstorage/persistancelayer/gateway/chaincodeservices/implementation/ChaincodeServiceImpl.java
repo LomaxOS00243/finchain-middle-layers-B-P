@@ -5,9 +5,7 @@ import finchainstorage.persistancelayer.gateway.chaincodeservices.DataChaincodeS
 import finchainstorage.persistancelayer.gateway.chaincodeservices.EmployeeChaincodeService;
 import finchainstorage.persistancelayer.gateway.exception.GatewayApiException;
 import finchainstorage.persistancelayer.gateway.network.NetworkConnector;
-import lombok.NoArgsConstructor;
 
-import lombok.RequiredArgsConstructor;
 import org.hyperledger.fabric.gateway.Contract;
 import org.hyperledger.fabric.gateway.ContractException;
 import org.hyperledger.fabric.gateway.Gateway;

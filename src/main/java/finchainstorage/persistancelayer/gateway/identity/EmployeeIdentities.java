@@ -11,11 +11,14 @@ import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+
+import lombok.Getter;
 import org.hyperledger.fabric.gateway.Identities;
 import org.hyperledger.fabric.gateway.Identity;
 import org.hyperledger.fabric.gateway.Wallet;
 import org.hyperledger.fabric.gateway.Wallets;
 
+@Getter
 public class EmployeeIdentities {
 
     private final String employeeID;
@@ -43,12 +46,6 @@ public class EmployeeIdentities {
         try (Reader certificateReader = Files.newBufferedReader(certificatePath, StandardCharsets.UTF_8)) {
             return Identities.readX509Certificate(certificateReader);
         }
-    }
-    public String getEmployeeID() {
-        return employeeID;
-    }
-    public Wallet getwallet(){
-        return wallet;
     }
 
     //Store user identity in the wallet
