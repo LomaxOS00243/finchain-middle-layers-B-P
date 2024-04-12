@@ -7,8 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -18,11 +18,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
-public class SecurityFilterChain extends OncePerRequestFilter {
+public class SessionFilter extends OncePerRequestFilter {
 
-    private final SessionRegistry sessionRegistry;
-    private final EmployeeDTODetails employeeDTODetails;
+    @Autowired
+    private SessionRegistry sessionRegistry;
+
+    @Autowired
+    private EmployeeDTODetails employeeDTODetails;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
@@ -55,7 +57,7 @@ public class SecurityFilterChain extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken(employee, null, employee.getAuthorities());
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        //Set the authentication object in the security context
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
     private void responseError(HttpServletResponse response) throws IOException {

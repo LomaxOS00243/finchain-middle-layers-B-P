@@ -2,9 +2,9 @@ package finchainstorage.businesslayer.config;
 
 
 import finchainstorage.businesslayer.dto.EmployeeDTODetails;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,11 +12,11 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configurable
-@RequiredArgsConstructor
+@Configuration
 public class AppConfiguration {
 
-    private final EmployeeDTODetails employeeDTODetails = new EmployeeDTODetails();
+    @Autowired
+    private EmployeeDTODetails employeeDTODetails;
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

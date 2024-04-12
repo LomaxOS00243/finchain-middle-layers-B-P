@@ -19,6 +19,7 @@ public class EmployeeAuthenticationServiceImpl implements EmployeeAuthentication
     private final ChaincodeServiceImpl chaincodeServer = new ChaincodeServiceImpl();
     private final UtilityChaincodeServiceImpl utilityChaincodeServer = new UtilityChaincodeServiceImpl();
 
+    private final InMemoryServices emplInMemoryServices = new InMemoryServices();
     private Contract contract;
 
     @Override
@@ -41,13 +42,15 @@ public class EmployeeAuthenticationServiceImpl implements EmployeeAuthentication
     @Override
     public EmployeeDTO findEmployee(EmployeeDTOLogin eLoginDto) {
 
-        boolean isEmployeeExist = InMemoryServices.checkEmployee(eLoginDto.getEmployeeId(), eLoginDto.getPassword());
+        InMemoryServices inMemoService = new InMemoryServices();
+
+        boolean isEmployeeExist = emplInMemoryServices.checkEmployee(eLoginDto.getEmployeeId(), eLoginDto.getPassword());
 
         if (!isEmployeeExist) {
             throw new BusinessApiException("Employee not found: You must to register first");
             //Redirect to the registration page
         }
-        return InMemoryServices.getEmployee(eLoginDto.getEmployeeId());
+        return inMemoService.getEmployee(eLoginDto.getEmployeeId());
     }
     @Override
     public void verifyLoginTransaction(EmployeeDTOLogin eLoginDto) {

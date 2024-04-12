@@ -7,8 +7,7 @@ import finchainstorage.businesslayer.inmemory.InMemoryServices;
 import finchainstorage.businesslayer.inmemory.SessionRegistry;
 import finchainstorage.businesslayer.model.Employees;
 import finchainstorage.businesslayer.services.EmployeeAuthenticationService;
-import finchainstorage.businesslayer.services.implementaion.EmployeeAuthenticationServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +16,15 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins ="*", maxAge = 3500)
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class EmployeeController {
-        private final EmployeeAuthenticationService emplAuthServer = new EmployeeAuthenticationServiceImpl();
+
+        @Autowired
+        private EmployeeAuthenticationService emplAuthServer;
+
+        @Autowired
+        private SessionRegistry sessionRegistry;
+        @Autowired
+        private InMemoryServices emplInMemoryServices;
 
         @PostMapping("/register")
         public ResponseEntity<?> createEmployeeAccount(@RequestBody Employees employee) {
@@ -36,7 +41,7 @@ public class EmployeeController {
                 );
 
                 //Store registered employees in memory for authentication
-                InMemoryServices.addEmployee(employee.getName(), eReqDTO);
+                emplInMemoryServices.addEmployee(employee.getName(), eReqDTO);
 
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
@@ -55,7 +60,7 @@ public class EmployeeController {
 
 
 
-                String sessionId = SessionRegistry.addSession(eReqDto);
+                String sessionId = sessionRegistry.addSession(eReqDto);
 
                 Map<String, Object> response = Map.of(
                         "Response Code", HttpStatus.OK.value(),
