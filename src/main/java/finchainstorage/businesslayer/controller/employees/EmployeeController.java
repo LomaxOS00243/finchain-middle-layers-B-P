@@ -1,56 +1,73 @@
 package finchainstorage.businesslayer.controller.employees;
 
+import finchainstorage.businesslayer.dto.EmployeeDTOLogin;
 import finchainstorage.businesslayer.dto.EmployeeDTO;
+import finchainstorage.businesslayer.dto.DTOMapper;
+import finchainstorage.businesslayer.inmemory.InMemoryServices;
+import finchainstorage.businesslayer.inmemory.SessionRegistry;
 import finchainstorage.businesslayer.model.Employees;
-import finchainstorage.businesslayer.message.HttpResponse;
-import finchainstorage.businesslayer.services.EmployeeService;
-import finchainstorage.businesslayer.services.implementaion.EmployeeServiceImpl;
+import finchainstorage.businesslayer.services.EmployeeAuthenticationService;
+import finchainstorage.businesslayer.services.implementaion.EmployeeAuthenticationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
-
 @RestController
-//@CrossOrigin(origins ="http://localhost:8081")
+@CrossOrigin(origins ="*", maxAge = 3500)
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class EmployeeController {
-
-        private final EmployeeService employeeService = new EmployeeServiceImpl();
+        private final EmployeeAuthenticationService emplAuthServer = new EmployeeAuthenticationServiceImpl();
 
         @PostMapping("/register")
-        public ResponseEntity<String> createEmployeeAccount(@RequestBody Employees employee) {
+        public ResponseEntity<?> createEmployeeAccount(@RequestBody Employees employee) {
 
-                //EmployeeDTO employee = employeeService.createAccount(employee);
+                //String eRegAccountResponse = emplAuthServer.createAccount(employee); //Return this transaction id
 
-                HttpResponse response = new HttpResponse(HttpStatus.CREATED,
-                        "Employee account created successfully", Map.of("employee", employee.toString()));
+                EmployeeDTO eReqDTO = DTOMapper.fromEmployee(employee);//Map employee to DTO
 
-                return ResponseEntity.accepted().body(response.toString());
+                Map<String, Object> response = Map.of(
+                        "Response Code", HttpStatus.CREATED.value(),
+                        "status", HttpStatus.CREATED,
+                        "message", "Employee account created successfully",
+                        "Transaction ID", "eRegAccountResponse78676574646464644646"
+                );
+
+                //Store registered employees in memory for authentication
+                InMemoryServices.addEmployee(employee.getName(), eReqDTO);
+
+                return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
-        /*
-        @PostMapping("/loginEmployee")
-        public void loginEmployee(@RequestBody Employees employee) {
-            employeeService.loginEmployee(employee);
-        }*/
-        /*public String generateEmployeePassword(String id) {
-            Random random = new Random();
-            StringBuilder password = new StringBuilder(15);
-            String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            String lowerCaseLetters = upperCaseLetters.toLowerCase();
-            String numbers = "0123456789";
-            String specialCharacters = "!@#$%&*?£";
-            String combinedChars = upperCaseLetters + lowerCaseLetters + numbers + specialCharacters;
 
-            int firstChars = id.length();
-            password.append(id);
+        @PostMapping("/login")
+        public ResponseEntity<?> login(@RequestBody EmployeeDTOLogin employeeDtoLogin) {
 
-            for (int i = firstChars; i < 15; i++) {
-                password.append(combinedChars.charAt(random.nextInt(combinedChars.length())));
-            }
-            return password.toString();
-        }*/
+            //get login body and check if the employee exists in the memory
+                EmployeeDTO eReqDto = emplAuthServer.findEmployee(employeeDtoLogin);
+
+                //if yes, forward the request to the blockchain network for verification
+                        //blockchain checks: permission and password validation
+                //emplAuthServer.verifyLoginTransaction(employeeLoginDto);
+                        //redirect to the registration page
+                //take employee name and password for authenticationManagement
+
+
+
+                String sessionId = SessionRegistry.addSession(eReqDto);
+
+                Map<String, Object> response = Map.of(
+                        "Response Code", HttpStatus.OK.value(),
+                        "status", HttpStatus.OK,
+                        "message", "Login successful",
+                        "employee", eReqDto.getUsername(),
+                        "sessionId", sessionId
+                );
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+                // if the response is true, return the employee details and the token
+                        //return response of the employee, token, and the status
+        }
+
 }

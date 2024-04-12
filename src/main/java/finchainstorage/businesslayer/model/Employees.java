@@ -1,22 +1,23 @@
 package finchainstorage.businesslayer.model;
 
-import lombok.*;
+import lombok.Setter;
 import org.json.JSONObject;
-
 
 import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 
-@Getter
+
 public class Employees {
+    @Setter
     private String employeeId;
     private String name;
+
     @Setter
     private String password;
 
-    @Setter
+
     private String recoveryPhrase;
 
     public Employees() {}
@@ -27,6 +28,26 @@ public class Employees {
         this.password = password;
         this.recoveryPhrase = recoveryPhrase;
     }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public String getRecoveryPhrase() {
+        return recoveryPhrase;
+    }
+
 
     public static Employees deserialize(final byte[] employeeJSON) {
         return deserialize(new String(employeeJSON, UTF_8));
@@ -44,8 +65,8 @@ public class Employees {
         return new Employees(id, name, password, phrase);
     }
 
-    @Override
-    public String toString() {
+
+    public String display() {
         return "{" +
                 " employeeId:'" + employeeId + '\'' +
                 " name:'" + name + '\'' +

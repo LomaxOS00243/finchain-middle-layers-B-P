@@ -9,7 +9,7 @@ public class FinchainApplication {
 
 	public static void main(String[] args){
 		SpringApplication.run(FinchainApplication.class, args);
-		System.out.println("Gateway Services is running...");
+		System.out.println("Gateway Service is running...");
 
 	}
 }

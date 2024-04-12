@@ -8,16 +8,26 @@ import java.util.Map;
 public class HttpResponse {
     private final HttpStatus status;
     private final String message;
-    private final Map<?, ?> data;
+    private Map<?, ?> data;
 
+    public HttpResponse(HttpStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
     public HttpResponse(HttpStatus status, String message, Map<?, ?> data) {
         this.status = status;
         this.message = message;
         this.data = data;
     }
 
-    @Override
-    public String toString() {
+    public String toStringWithNotData() {
+        return "Response: " +
+                " {\n" +
+                "  Status:" + status + '\n' +
+                "  Message:'" + message + '\n' +
+                '}';
+    }
+    public String toStringWithData() {
         return "Response: " +
                 " {\n" +
                 "  Status:" + status + '\n' +

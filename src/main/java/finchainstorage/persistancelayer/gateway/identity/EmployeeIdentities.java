@@ -11,19 +11,23 @@ import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-
-import lombok.Getter;
 import org.hyperledger.fabric.gateway.Identities;
 import org.hyperledger.fabric.gateway.Identity;
 import org.hyperledger.fabric.gateway.Wallet;
 import org.hyperledger.fabric.gateway.Wallets;
 
-@Getter
+
+
+
 public class EmployeeIdentities {
 
+
     private final String employeeID;
+
     private static final Path walletPath = Paths.get( "wallet");
-    private Wallet wallet;
+
+    private final Wallet wallet;
+
 
     private EmployeeIdentities(String employeeID){
         this.employeeID = employeeID;
@@ -31,10 +35,17 @@ public class EmployeeIdentities {
             wallet = Wallets.newFileSystemWallet(walletPath);
         }
         catch (IOException e){
-            e.fillInStackTrace();
+            throw new RuntimeException(e);
         }
-
     }
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
     //retrieve the private key from the file system
     private static PrivateKey getPrivateKey(final Path privateKeyPath) throws IOException, InvalidKeyException {
         try (Reader privateKeyReader = Files.newBufferedReader(privateKeyPath, StandardCharsets.UTF_8)) {
@@ -64,7 +75,7 @@ public class EmployeeIdentities {
                 }
             }
             catch (IOException e){
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             Path certificatePath = credentialPath.resolve(Paths.get("signcerts", "cert.pem"));
 
@@ -80,16 +91,14 @@ public class EmployeeIdentities {
 
         } catch (IOException | CertificateException | InvalidKeyException e) {
             System.err.println("Error adding to wallet");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
-
 
     //To initialise this class, we call GetIdentity method and pass an  employeeID as arg in the constructor
     public static EmployeeIdentities getIdentity(String employeeID) {
             return new EmployeeIdentities(employeeID+"@finchain.com");
     }
-
     //Delete an employeeID from the wallet
     public  void deleteIdentity(String employeeID){
 
@@ -99,7 +108,7 @@ public class EmployeeIdentities {
             this.wallet.remove(idLabel);
         }
         catch (IOException e){
-            e.fillInStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

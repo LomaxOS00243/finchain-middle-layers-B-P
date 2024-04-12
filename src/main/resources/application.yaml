@@ -1,4 +1,0 @@
-spring:
-  datasource:
-    url: grpcs://localhost:7051
-
