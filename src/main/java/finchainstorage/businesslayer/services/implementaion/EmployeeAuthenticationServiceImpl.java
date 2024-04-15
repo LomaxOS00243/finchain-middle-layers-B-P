@@ -9,18 +9,25 @@ import finchainstorage.businesslayer.services.EmployeeAuthenticationService;
 import finchainstorage.persistancelayer.gateway.chaincodeservices.implementation.ChaincodeServiceImpl;
 import finchainstorage.persistancelayer.gateway.chaincodeservices.implementation.UtilityChaincodeServiceImpl;
 import finchainstorage.persistancelayer.gateway.network.NetworkConnector;
-import lombok.RequiredArgsConstructor;
 import org.hyperledger.fabric.gateway.Contract;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class EmployeeAuthenticationServiceImpl implements EmployeeAuthenticationService {
-    private final ChaincodeServiceImpl chaincodeServer = new ChaincodeServiceImpl();
-    private final UtilityChaincodeServiceImpl utilityChaincodeServer = new UtilityChaincodeServiceImpl();
 
-    private final InMemoryServices emplInMemoryServices = new InMemoryServices();
+
+    private final ChaincodeServiceImpl chaincodeServer;
+    private final UtilityChaincodeServiceImpl utilityChaincodeServer;
     private Contract contract;
+    private final InMemoryServices inMemoryService;
+
+    @Autowired
+    public EmployeeAuthenticationServiceImpl(ChaincodeServiceImpl chaincodeServer, UtilityChaincodeServiceImpl utilityChaincodeServer, InMemoryServices inMemoryService) {
+        this.chaincodeServer = chaincodeServer;
+        this.utilityChaincodeServer = utilityChaincodeServer;
+        this.inMemoryService = inMemoryService;
+    }
 
     @Override
     public String createAccount(Employees employee) {
@@ -39,19 +46,17 @@ public class EmployeeAuthenticationServiceImpl implements EmployeeAuthentication
 
         return chaincodeServer.createAccount(employee, contract);
     }
-    @Override
+   /* @Override
     public EmployeeDTO findEmployee(EmployeeDTOLogin eLoginDto) {
 
-        InMemoryServices inMemoService = new InMemoryServices();
-
-        boolean isEmployeeExist = emplInMemoryServices.checkEmployee(eLoginDto.getEmployeeId(), eLoginDto.getPassword());
+        boolean isEmployeeExist = inMemoryService.checkEmployee(eLoginDto.getEmployeeId(), eLoginDto.getPassword());
 
         if (!isEmployeeExist) {
             throw new BusinessApiException("Employee not found: You must to register first");
             //Redirect to the registration page
         }
-        return inMemoService.getEmployee(eLoginDto.getEmployeeId());
-    }
+        return inMemoryService.getEmployee(eLoginDto.getEmployeeId());
+    }*/
     @Override
     public void verifyLoginTransaction(EmployeeDTOLogin eLoginDto) {
 

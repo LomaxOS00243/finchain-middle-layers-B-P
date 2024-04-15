@@ -1,6 +1,5 @@
 package finchainstorage.businesslayer.dto;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +11,10 @@ import java.util.List;
 
 public class EmployeeDTO implements UserDetails {
 
-    private String employeeId;
-    private String name;
-    private String password;
+    private final String employeeId;
+    private final String name;
+    private final String password;
 
-    public EmployeeDTO()  {}
 
     public EmployeeDTO(String employeeId, String name, String password)  {
 
@@ -25,10 +23,15 @@ public class EmployeeDTO implements UserDetails {
         this.password = password;
     }
 
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("EMPLOYEE"));
     }
+
     @Override
     public String getUsername() {
         return name;

@@ -33,7 +33,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
         //Check is the request contains a session id
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            responseError(response);
+            //responseError(response);
             filterChain.doFilter(request, response);
             return;
         }
@@ -60,10 +60,10 @@ public class SessionFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-    private void responseError(HttpServletResponse response) throws IOException {
+    /*private void responseError(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.getWriter().write("{\"error\": \"Unauthorized - Session ID missing or invalid.\"}");
         response.getWriter().flush();
-    }
+    }*/
 }

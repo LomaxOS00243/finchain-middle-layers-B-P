@@ -7,20 +7,17 @@ import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-
-
 public class Employees {
     @Setter
     private String employeeId;
+    @Setter
     private String name;
 
     @Setter
     private String password;
 
-
     private String recoveryPhrase;
 
-    public Employees() {}
 
     public Employees(String employeeId, String name, String password, String recoveryPhrase) {
         this.employeeId = employeeId;
