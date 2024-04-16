@@ -29,15 +29,16 @@ public class SessionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorization");
+        final String authzHeader = request.getHeader("Authorization");
 
         //Check is the request contains a session id
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authzHeader == null || !authzHeader.startsWith("Bearer ")) {
             //responseError(response);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request, response);
             return;
         }
-        final String sessionId = authHeader.substring(7);
+        final String sessionId = authzHeader.substring(7);
 
         final String employeeName = sessionRegistry.getEmployeeNameBySessionId(sessionId);
 

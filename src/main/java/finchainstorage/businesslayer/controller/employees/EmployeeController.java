@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,35 +21,36 @@ import java.util.concurrent.ConcurrentHashMap;
 @CrossOrigin(origins ="*", maxAge = 3500)
 @RequestMapping("/api")
 public class EmployeeController {
-        private final EmployeeAuthenticationService emplAuthServer;
+        private final EmployeeAuthenticationService employeeAuthServing;
 
         private final SessionRegistry sessionRegistry;
-        //private final InMemoryServices emplInMemoryServices;
+
+        //private final InMemoryServices registeredEmployees;
         private final  Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
 
         @Autowired
         public EmployeeController(EmployeeAuthenticationService emplAuthServer, SessionRegistry sessionRegistry) {
-                this.emplAuthServer = emplAuthServer;
+                this.employeeAuthServing = emplAuthServer;
                 this.sessionRegistry = sessionRegistry;
                 //this.emplInMemoryServices = emplInMemoryServices;
         }
         @PostMapping("/register")
         public ResponseEntity<?> createEmployeeAccount(@RequestBody Employees employee) {
 
-                //String eRegAccountResponse = emplAuthServer.createAccount(employee); //Return this transaction id
+                //String eRegAccountResponse = emplAuthServer.createAccount(employee); //Return this transaction id from the network
 
                 EmployeeDTO eReqDTO = DTOMapper.fromEmployee(employee);//Map employee to DTO
 
-                Map<String, Object> response = Map.of(
-                        "Response Code", HttpStatus.CREATED.value(),
-                        "status", HttpStatus.CREATED,
-                        "message", "Employee account created successfully",
-                        "Transaction ID", "eRegAccountResponse78676574646464644646"
-                );
+                Map<String, Object> response = new LinkedHashMap<>();
+                response.put("Response Code", HttpStatus.CREATED.value());
+                response.put("status", HttpStatus.CREATED);
+                response.put("message", "Employee account created successfully");
+                response.put("Transaction ID", "eRegAccountResponse78676574646464644646");
 
                 registeredEmployees.put(employee.getEmployeeId(), eReqDTO);
-                //Store registered employees in memory for authentication
-                //emplInMemoryServices.addEmployee(registeredEmployees, employee.getName(), eReqDTO);
+
+                //Store registered employees in memory for authorisation
+                //emplInMemoryServices.addEmployee(employee.getName(), eReqDTO);
 
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
@@ -55,9 +58,7 @@ public class EmployeeController {
         @PostMapping("/login")
         public ResponseEntity<?> login(@RequestBody EmployeeDTOLogin employeeDtoLogin) {
 
-            //get login body and check if the employee exists in the memory
-
-
+            //Check if employee already exists in the registered employees data structure
                 EmployeeDTO eReqDto = registeredEmployees.get(employeeDtoLogin.getEmployeeId());
 
                 if (eReqDto == null) {
@@ -66,23 +67,19 @@ public class EmployeeController {
                         //Redirect to the registration page
                 }
 
-                //EmployeeDTO eReqDto = emplAuthServer.findEmployee(registeredEmployees, employeeDtoLogin);
+                //EmployeeDTO eReqDto = employeeAuthServing.findEmployee(employeeDtoLogin);
 
-                //if yes, forward the request to the blockchain network for verification
-                        //blockchain checks: permission and password validation
+
                 //emplAuthServer.verifyLoginTransaction(employeeLoginDto);
-                        //redirect to the registration page
-                //take employee name and password for authenticationManagement
 
                 String sessionId = sessionRegistry.addSession(eReqDto);
 
-                Map<String, Object> response = Map.of(
-                        "Response Code", HttpStatus.OK.value(),
-                        "status", HttpStatus.OK,
-                        "message", "Login successful",
-                        "employee", eReqDto.getUsername(),
-                        "sessionId", sessionId
-                );
+                Map<String, Object> response = new LinkedHashMap<>();
+                response.put("Response Code", HttpStatus.OK.value());
+                response.put("status", HttpStatus.OK);
+                response.put("message", "Login successful");
+                response.put("employee", eReqDto.getUsername());
+                response.put("sessionId", sessionId);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
                 // if the response is true, return the employee details and the token

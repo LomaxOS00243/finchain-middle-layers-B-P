@@ -1,21 +1,20 @@
 package finchainstorage.businesslayer.inmemory;
 
 import finchainstorage.businesslayer.dto.EmployeeDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@RequiredArgsConstructor
 public class InMemoryServices {
-    private final static Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
-    public void addEmployee(Map<String, EmployeeDTO> reg, String employeeId,  EmployeeDTO employeeDetails) {
+    private final Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
+    public void addEmployee(String employeeId,  EmployeeDTO employeeDetails) {
 
-        reg.put(employeeId, employeeDetails);
-    }
-    public boolean checkEmployee(String employeeId,  String password) {
-        EmployeeDTO employee = registeredEmployees.get(employeeId);
-        return employee != null && employee.getPassword().equals(password);
+        registeredEmployees.put(employeeId, employeeDetails);
+        System.out.println("Registered Employee: " + employeeId + " Details: " + employeeDetails.toString());
     }
 
     public EmployeeDTO getEmployee(String employeeId) {

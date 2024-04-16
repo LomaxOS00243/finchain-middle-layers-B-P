@@ -11,23 +11,21 @@ import finchainstorage.persistancelayer.gateway.chaincodeservices.implementation
 import finchainstorage.persistancelayer.gateway.network.NetworkConnector;
 import org.hyperledger.fabric.gateway.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class EmployeeAuthenticationServiceImpl implements EmployeeAuthenticationService {
 
 
-    private final ChaincodeServiceImpl chaincodeServer;
-    private final UtilityChaincodeServiceImpl utilityChaincodeServer;
+    @Autowired
+    private ChaincodeServiceImpl chaincodeServer;
+    @Autowired
+    private UtilityChaincodeServiceImpl utilityChaincodeServer;
     private Contract contract;
-    private final InMemoryServices inMemoryService;
 
     @Autowired
-    public EmployeeAuthenticationServiceImpl(ChaincodeServiceImpl chaincodeServer, UtilityChaincodeServiceImpl utilityChaincodeServer, InMemoryServices inMemoryService) {
-        this.chaincodeServer = chaincodeServer;
-        this.utilityChaincodeServer = utilityChaincodeServer;
-        this.inMemoryService = inMemoryService;
-    }
+    private InMemoryServices inMemoryService;
+
 
     @Override
     public String createAccount(Employees employee) {
@@ -46,17 +44,18 @@ public class EmployeeAuthenticationServiceImpl implements EmployeeAuthentication
 
         return chaincodeServer.createAccount(employee, contract);
     }
-   /* @Override
+    @Override
     public EmployeeDTO findEmployee(EmployeeDTOLogin eLoginDto) {
 
-        boolean isEmployeeExist = inMemoryService.checkEmployee(eLoginDto.getEmployeeId(), eLoginDto.getPassword());
+        EmployeeDTO employee = inMemoryService.getEmployee(eLoginDto.getEmployeeId());
 
-        if (!isEmployeeExist) {
-            throw new BusinessApiException("Employee not found: You must to register first");
-            //Redirect to the registration page
+        if (employee == null) {
+            throw new BusinessApiException("Employee not found: You must register first");
+        } else if (!employee.getPassword().equals(eLoginDto.getPassword())) {
+            throw new BusinessApiException("Incorrect password");
         }
-        return inMemoryService.getEmployee(eLoginDto.getEmployeeId());
-    }*/
+        return employee;
+    }
     @Override
     public void verifyLoginTransaction(EmployeeDTOLogin eLoginDto) {
 

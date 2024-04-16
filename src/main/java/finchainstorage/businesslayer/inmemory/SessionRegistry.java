@@ -28,7 +28,7 @@ public class SessionRegistry {
         return session_id;
     }
 
-    //Generate a session id to be used as a key in the session registry
+    //Generate a session id to be used for access token
     private String generateSessionId() {
         return Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes());
     }
@@ -43,9 +43,6 @@ public class SessionRegistry {
         return session_registry.get(session_id);
     }
 
-    public void removeSession(String session_id) {
-        session_registry.remove(session_id);
-    }
 
     public void clear() {
         session_registry.clear();
