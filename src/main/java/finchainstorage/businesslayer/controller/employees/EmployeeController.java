@@ -61,16 +61,18 @@ public class EmployeeController {
             //Check if employee already exists in the registered employees data structure
                 EmployeeDTO eReqDto = registeredEmployees.get(employeeDtoLogin.getEmployeeId());
 
+
+
                 if (eReqDto == null) {
                         return new ResponseEntity<>("Employee not found: You must to register first", HttpStatus.NOT_FOUND);
                         //throw new BusinessApiException("Employee not found: You must to register first");
                         //Redirect to the registration page
                 }
-
+                System.out.println("EmployeeDTO: " + eReqDto.toString());
                 //EmployeeDTO eReqDto = employeeAuthServing.findEmployee(employeeDtoLogin);
 
 
-                //emplAuthServer.verifyLoginTransaction(employeeLoginDto);
+                //emplAuthServer.verifyLoginTransaction(employeeLoginDto); //blockchain network verification
 
                 String sessionId = sessionRegistry.addSession(eReqDto);
 
@@ -82,8 +84,7 @@ public class EmployeeController {
                 response.put("sessionId", sessionId);
 
                 return new ResponseEntity<>(response, HttpStatus.OK);
-                // if the response is true, return the employee details and the token
-                        //return response of the employee, token, and the status
+
         }
 
 }

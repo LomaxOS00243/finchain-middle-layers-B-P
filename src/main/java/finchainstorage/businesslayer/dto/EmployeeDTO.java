@@ -12,7 +12,7 @@ import java.util.List;
 
 public class EmployeeDTO implements UserDetails {
 
-    @Getter
+
     private String employeeId;
     private String name;
     private String password;
@@ -25,6 +25,9 @@ public class EmployeeDTO implements UserDetails {
         this.password = password;
     }
 
+    public String getEmployeeId() {
+        return employeeId;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("EMPLOYEE"));
