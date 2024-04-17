@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeDTODetails implements UserDetailsService {
 
-    @Autowired
-    private InMemoryServices inMemoryService;
+    //@Autowired
+    //private InMemoryServices inMemoryService;
 
     @Override
     public EmployeeDTO loadUserByUsername(String employeeName) throws UsernameNotFoundException {
 
-        EmployeeDTO employeeDetails = inMemoryService.getEmployee(employeeName);
+        //EmployeeDTO employeeDetails = inMemoryService.getEmployee(employeeName); //Hardcoded for now until the database is implemented
+
+        EmployeeDTO employeeDetails = new EmployeeDTO("fin-getThingsDone", employeeName, "fs00dfsdfs");
 
         if (employeeDetails == null) {
             throw new UsernameNotFoundException("Employee not found");

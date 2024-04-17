@@ -1,4 +1,4 @@
-package finchainstorage.persistancelayer.gateway.chaincodeservices;
+package finchainstorage.persistancelayer.gateway.services;
 
 import org.hyperledger.fabric.gateway.Contract;
 

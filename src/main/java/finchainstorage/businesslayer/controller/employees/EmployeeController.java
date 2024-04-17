@@ -3,11 +3,9 @@ package finchainstorage.businesslayer.controller.employees;
 import finchainstorage.businesslayer.dto.EmployeeDTOLogin;
 import finchainstorage.businesslayer.dto.EmployeeDTO;
 import finchainstorage.businesslayer.dto.DTOMapper;
-import finchainstorage.businesslayer.exception.BusinessApiException;
-import finchainstorage.businesslayer.inmemory.InMemoryServices;
 import finchainstorage.businesslayer.inmemory.SessionRegistry;
 import finchainstorage.businesslayer.model.Employees;
-import finchainstorage.businesslayer.services.EmployeeAuthenticationService;
+import finchainstorage.businesslayer.services.implementaion.EmployeeServicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +19,18 @@ import java.util.concurrent.ConcurrentHashMap;
 @CrossOrigin(origins ="*", maxAge = 3500)
 @RequestMapping("/api")
 public class EmployeeController {
-        private final EmployeeAuthenticationService employeeAuthServing;
+        private final EmployeeServicesImpl employeeAuthServing;
 
         private final SessionRegistry sessionRegistry;
 
         //private final InMemoryServices registeredEmployees;
-        private final  Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
+        //private final  Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
 
         @Autowired
-        public EmployeeController(EmployeeAuthenticationService emplAuthServer, SessionRegistry sessionRegistry) {
+        public EmployeeController(EmployeeServicesImpl emplAuthServer, SessionRegistry sessionRegistry) {
                 this.employeeAuthServing = emplAuthServer;
                 this.sessionRegistry = sessionRegistry;
-                //this.emplInMemoryServices = emplInMemoryServices;
+                //this.registeredEmployees = registeredEmpl;
         }
         @PostMapping("/register")
         public ResponseEntity<?> createEmployeeAccount(@RequestBody Employees employee) {
@@ -47,10 +45,14 @@ public class EmployeeController {
                 response.put("message", "Employee account created successfully");
                 response.put("Transaction ID", "eRegAccountResponse78676574646464644646");
 
-                registeredEmployees.put(employee.getEmployeeId(), eReqDTO);
+                //registeredEmployees.put(employee.getEmployeeId(), eReqDTO);
 
                 //Store registered employees in memory for authorisation
-                //emplInMemoryServices.addEmployee(employee.getName(), eReqDTO);
+                //registeredEmployees.addEmployee(employee.getName(), eReqDTO);
+
+                employeeAuthServing.addEmployee(employee.getEmployeeId(), eReqDTO);
+
+                System.out.println("EmployeeDTO: " + eReqDTO.toString());
 
                 return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
@@ -59,18 +61,18 @@ public class EmployeeController {
         public ResponseEntity<?> login(@RequestBody EmployeeDTOLogin employeeDtoLogin) {
 
             //Check if employee already exists in the registered employees data structure
-                EmployeeDTO eReqDto = registeredEmployees.get(employeeDtoLogin.getEmployeeId());
+                //EmployeeDTO eReqDto = registeredEmployees.get(employeeDtoLogin.getEmployeeId());
 
 
 
-                if (eReqDto == null) {
-                        return new ResponseEntity<>("Employee not found: You must to register first", HttpStatus.NOT_FOUND);
+                //if (eReqDto == null) {
+                        //return new ResponseEntity<>("Employee not found: You must to register first", HttpStatus.NOT_FOUND);
                         //throw new BusinessApiException("Employee not found: You must to register first");
                         //Redirect to the registration page
-                }
-                System.out.println("EmployeeDTO: " + eReqDto.toString());
-                //EmployeeDTO eReqDto = employeeAuthServing.findEmployee(employeeDtoLogin);
+                //}
 
+                EmployeeDTO eReqDto = employeeAuthServing.findEmployee(employeeDtoLogin);
+                System.out.println("EmployeeDTO: " + eReqDto.toString());
 
                 //emplAuthServer.verifyLoginTransaction(employeeLoginDto); //blockchain network verification
 

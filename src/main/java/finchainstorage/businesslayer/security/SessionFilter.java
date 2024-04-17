@@ -42,8 +42,11 @@ public class SessionFilter extends OncePerRequestFilter {
 
         final String employeeName = sessionRegistry.getEmployeeNameBySessionId(sessionId);
 
+        System.out.println("Employee Name from session: " + employeeName);
+
         if (employeeName != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
-            EmployeeDTO employee = employeeDTODetails.loadUserByUsername(employeeName);
+
+            EmployeeDTO employee = employeeDTODetails.loadUserByUsername(employeeName); //Hardcoded for now until the database is implemented
             if (sessionRegistry.checkSession(sessionId)) {
                 authenticate(employee, request);
             }

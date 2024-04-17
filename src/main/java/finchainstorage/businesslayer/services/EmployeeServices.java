@@ -5,12 +5,19 @@ import finchainstorage.businesslayer.model.Employees;
 import finchainstorage.businesslayer.dto.EmployeeDTO;
 
 
-public interface EmployeeAuthenticationService {
+public interface EmployeeServices {
 
     String createAccount(Employees employee);
-    EmployeeDTO findEmployee(EmployeeDTOLogin eLoginDto);
 
     boolean login(EmployeeDTOLogin eLoginDto);
 
+    void uploadDocument( String documentId, String employeeId, String documentName);
+
     void verifyLoginTransaction(EmployeeDTOLogin eLoginDto);
+
+    EmployeeDTO findEmployee(EmployeeDTOLogin eLoginDto);
+
+
+    void addEmployee(String employeeId,  EmployeeDTO employeeDetails);
+
 }

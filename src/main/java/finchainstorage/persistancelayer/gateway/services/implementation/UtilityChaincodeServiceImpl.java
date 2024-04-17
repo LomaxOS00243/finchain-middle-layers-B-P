@@ -1,17 +1,17 @@
-package finchainstorage.persistancelayer.gateway.chaincodeservices.implementation;
+package finchainstorage.persistancelayer.gateway.services.implementation;
 
 import finchainstorage.businesslayer.model.Employees;
-import finchainstorage.persistancelayer.gateway.chaincodeservices.UtilityChaincodeService;
+import finchainstorage.persistancelayer.gateway.services.UtilityChaincodeService;
 import finchainstorage.persistancelayer.gateway.exception.GatewayApiException;
 import org.hyperledger.fabric.gateway.Contract;
 import org.hyperledger.fabric.gateway.ContractException;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-@Repository
+@Service
 public class UtilityChaincodeServiceImpl implements UtilityChaincodeService {
     @Override
     public void verifyDuplication(String employeeId, Contract contract) {

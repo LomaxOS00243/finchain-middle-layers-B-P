@@ -10,11 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @RequiredArgsConstructor
 public class InMemoryServices {
-    private final Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
+    private static final Map<String, EmployeeDTO> registeredEmployees = new ConcurrentHashMap<>();
     public void addEmployee(String employeeId,  EmployeeDTO employeeDetails) {
 
         registeredEmployees.put(employeeId, employeeDetails);
-        System.out.println("Registered Employee: " + employeeId + " Details: " + employeeDetails.toString());
     }
 
     public EmployeeDTO getEmployee(String employeeId) {

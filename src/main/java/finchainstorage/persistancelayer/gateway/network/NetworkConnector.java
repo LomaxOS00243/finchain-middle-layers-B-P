@@ -42,7 +42,7 @@ public class NetworkConnector {
 
         Path connectionProfile = Paths.get("connection", "ConnectionProfile.yaml");
 
-        builder.identity(ids.getWallet(), ids.getEmployeeID()).networkConfig(connectionProfile).discovery(false);
+        builder.identity(ids.getWallet(), ids.getEmployeeID()).networkConfig(connectionProfile).discovery(true);
 
         return builder;
     }
