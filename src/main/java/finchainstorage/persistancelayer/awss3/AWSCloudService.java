@@ -16,17 +16,24 @@ import java.io.IOException;
 @Slf4j
 public class AWSCloudService {
 
-    private final AmazonS3 s3Client;
-    private final String BUCKET_NAME;
     @Autowired
-    public AWSCloudService(AmazonS3 s3Client,  @Value("${aws.s3.bucket.name}") String bucketName) {
+    private final AmazonS3 s3Client;
+
+    @Value("${aws.s3.bucket.name}")
+    private String bucketName;
+
+    public AWSCloudService(AmazonS3 s3Client) {
         this.s3Client = s3Client;
-        this.BUCKET_NAME = bucketName;
     }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
     public S3ObjectInputStream downloadDocument(String fileName) {
 
         try {
-            S3Object s3Object = s3Client.getObject(BUCKET_NAME, fileName);
+            S3Object s3Object = s3Client.getObject(bucketName, fileName);
             return s3Object.getObjectContent();
         } catch (Exception e) {
 
@@ -36,7 +43,7 @@ public class AWSCloudService {
 
     public  void uploadDocument(MultipartFile file)  {
         try {
-            s3Client.putObject(BUCKET_NAME, file.getOriginalFilename(), file.getInputStream(), getMetaData(file));
+            s3Client.putObject(bucketName, file.getOriginalFilename(), file.getInputStream(), getMetaData(file));
 
         } catch (IOException e) {
 

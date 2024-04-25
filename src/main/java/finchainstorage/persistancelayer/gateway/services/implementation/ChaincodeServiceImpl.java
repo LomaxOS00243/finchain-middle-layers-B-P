@@ -20,7 +20,8 @@ public class ChaincodeServiceImpl implements ChaincodeService {
 
         String hashRecoveryPhase = UtilityChaincodeServiceImpl.generateHashValue(employee.getRecoveryPhrase());
         try {
-            byte[] response = contract.submitTransaction("createEmployeeAccount", employee.getEmployeeId(), employee.getName(), employee.getPassword(), hashRecoveryPhase);
+            byte[] response = contract.submitTransaction("createEmployeeAccount", employee.getEmployeeId(), employee.getName(),
+                                                                                        employee.getPassword(), hashRecoveryPhase);
 
             return new String(response, StandardCharsets.UTF_8);
 

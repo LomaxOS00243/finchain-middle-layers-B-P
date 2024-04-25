@@ -87,7 +87,7 @@ public class EmployeeServicesImpl implements EmployeeServices {
         //Transaction to verify permissions from the blockchain network
         utilityChaincodeServer.verifyAccessPermission(contract);
 
-        //Transaction to upload the document details to the blockchain network
+        //Transaction to upload the document details
         chaincodeServer.uploadDocument(documentId,employeeId, documentName, contract);
 
         //Listen to the events to get the response from the blockchain network

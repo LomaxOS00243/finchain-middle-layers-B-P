@@ -26,34 +26,37 @@ public class SessionFilter extends OncePerRequestFilter {
     @Autowired
     private EmployeeDTODetails employeeDTODetails;
 
-    @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
 
-        final String authzHeader = request.getHeader("Authorization");
+    //Check if the session id is valid and authenticate the employee
+    @Override
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+                                    @NotNull FilterChain filterChain) throws ServletException, IOException {
+
+        //Get the session id from the request header
+        final String authzHeader = request.getHeader("Authorisation");
 
         //Check is the request contains a session id
         if (authzHeader == null || !authzHeader.startsWith("Bearer ")) {
-            //responseError(response);
+            //customisedResponseError(response);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             filterChain.doFilter(request, response);
             return;
         }
         final String sessionId = authzHeader.substring(7);
 
+        //Get the employee name with this session id
         final String employeeName = sessionRegistry.getEmployeeNameBySessionId(sessionId);
 
-        System.out.println("Employee Name from session: " + employeeName);
-
+        //Authenticate and Authorise the employee if the session id is valid and the employee is not already authenticated
         if (employeeName != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
 
-            EmployeeDTO employee = employeeDTODetails.loadUserByUsername(employeeName); //Hardcoded for now until the database is implemented
+            EmployeeDTO employee = employeeDTODetails.loadUserByUsername(employeeName);
+
             if (sessionRegistry.checkSession(sessionId)) {
                 authenticate(employee, request);
             }
         }
-
         filterChain.doFilter(request, response);
-
     }
     private void authenticate(EmployeeDTO employee, HttpServletRequest request) {
 
@@ -64,7 +67,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-    /*private void responseError(HttpServletResponse response) throws IOException {
+    /*private void customisedResponseError(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.getWriter().write("{\"error\": \"Unauthorized - Session ID missing or invalid.\"}");

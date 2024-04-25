@@ -29,7 +29,7 @@ public class SecurityConfiguration {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/api/register/**", "/api/login/**").permitAll()
+                .authorizeHttpRequests(authz -> authz.requestMatchers("/api/register", "/api/login").permitAll()
                 .anyRequest().authenticated())
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

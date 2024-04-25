@@ -5,10 +5,13 @@ import finchainstorage.persistancelayer.gateway.services.UtilityChaincodeService
 import finchainstorage.persistancelayer.gateway.exception.GatewayApiException;
 import org.hyperledger.fabric.gateway.Contract;
 import org.hyperledger.fabric.gateway.ContractException;
+import org.json.JSONException;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 
 @Service
@@ -18,6 +21,7 @@ public class UtilityChaincodeServiceImpl implements UtilityChaincodeService {
 
         try {
             contract.evaluateTransaction("checkIfAlreadyExists", employeeId);
+
         } catch (ContractException e) {
             if (e.getMessage().contains("EMPLOYEE_ALREADY_EXISTS")) {
                 throw new GatewayApiException("Error - "+ e.getMessage());
@@ -49,13 +53,29 @@ public class UtilityChaincodeServiceImpl implements UtilityChaincodeService {
 
             var txBlock = contractEvent.getTransactionEvent();
 
-            Employees employee = Employees.deserialize(contractEvent.getPayload().toString());
+            //Commented out the payload as it is not used
+            /*Optional<byte[]> optionalPayload = contractEvent.getPayload();
 
-            System.out.println("======================= Event ========================");
-            System.out.println("Transaction event: " + contractEvent.getName() + "-" + employee.display());
-            System.out.println("Transaction ID: " + txBlock.getTransactionID()+" - Status: "+txBlock.isValid());
-            System.out.println("Block No: " + txBlock.getBlockEvent().getBlockNumber());
-            System.out.println("=================== We did it! =================");
+            if (optionalPayload.isEmpty()) {
+                System.out.println("No payload received in this event.");
+                return;
+            }
+
+            String payloadString = new String(optionalPayload.get(), StandardCharsets.UTF_8);*/
+            try {
+                //Employees employee = Employees.deserialize(payloadString);
+                System.out.println("================ Blockchain Event ==============");
+                System.out.println("Transaction event: " + contractEvent.getName());
+                System.out.println("Status: " + txBlock.isValid());
+                System.out.println("Transaction ID: " + txBlock.getTransactionID() );
+                System.out.println("Block No: " + txBlock.getBlockEvent().getBlockNumber());
+                System.out.println("=================== We did it! =================");
+
+            } catch (JSONException e) {
+                System.err.println("Failed to parse JSON payload: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("An error occurred: " + e.getMessage());
+            }
         });
     }
 
@@ -64,10 +84,13 @@ public class UtilityChaincodeServiceImpl implements UtilityChaincodeService {
         byte[] convertValueAsByte = ValueToDigest.getBytes();
         String digestedInHex;
         StringBuilder hexString = new StringBuilder();
+
         try {
+            //Get an instance of the SHA-256 algorithm
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 
             byte[] digest = messageDigest.digest(convertValueAsByte);
+
             //Convert bitwise AND operation into a hexadecimal string
             for (byte b : digest) {
                 String hex = Integer.toHexString(0xff & b);

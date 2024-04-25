@@ -95,7 +95,7 @@ public class EmployeeIdentities {
         }
     }
 
-    //To initialise this class, we call GetIdentity method and pass an  employeeID as arg in the constructor
+    //Retrieve an employeeID from the wallet
     public static EmployeeIdentities getIdentity(String employeeID) {
             return new EmployeeIdentities(employeeID+"@finchain.com");
     }

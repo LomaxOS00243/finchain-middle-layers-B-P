@@ -7,14 +7,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @RequiredArgsConstructor
 public class SessionRegistry {
 
-    private static final HashMap<String, String> session_registry = new HashMap<>();
-
+    private static final Map<String, String> session_registry = new ConcurrentHashMap<>();
     //store user session once successfully logged in
     public String addSession(EmployeeDTO session_data) {//session data: id, name, password
 
@@ -27,7 +28,6 @@ public class SessionRegistry {
 
         return session_id;
     }
-
     //Generate a session id to be used for access token
     private String generateSessionId() {
         return Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes());
