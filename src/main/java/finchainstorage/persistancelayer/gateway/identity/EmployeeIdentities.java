@@ -11,6 +11,8 @@ import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+
+import finchainstorage.persistancelayer.gateway.exception.GatewayApiException;
 import org.hyperledger.fabric.gateway.Identities;
 import org.hyperledger.fabric.gateway.Identity;
 import org.hyperledger.fabric.gateway.Wallet;
@@ -75,7 +77,7 @@ public class EmployeeIdentities {
                 }
             }
             catch (IOException e){
-                throw new RuntimeException(e);
+                throw new GatewayApiException("Network Error - Identity "+ employeeID+"@finchain.com no registered in the network.");
             }
             Path certificatePath = credentialPath.resolve(Paths.get("signcerts", "cert.pem"));
 

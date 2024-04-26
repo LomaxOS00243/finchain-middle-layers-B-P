@@ -26,7 +26,6 @@ public class EmployeeController {
         public EmployeeController(EmployeeServicesImpl emplAuthServer, SessionRegistry sessionRegistry) {
                 this.employeeAuthService = emplAuthServer;
                 this.sessionRegistry = sessionRegistry;
-                //this.registeredEmployees = registeredEmpl;
         }
         @PostMapping("/register")
         public ResponseEntity<?> createEmployeeAccount(@RequestBody Employees employee) {

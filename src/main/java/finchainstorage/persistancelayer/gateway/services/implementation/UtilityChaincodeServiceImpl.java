@@ -69,7 +69,7 @@ public class UtilityChaincodeServiceImpl implements UtilityChaincodeService {
                 System.out.println("Status: " + txBlock.isValid());
                 System.out.println("Transaction ID: " + txBlock.getTransactionID() );
                 System.out.println("Block No: " + txBlock.getBlockEvent().getBlockNumber());
-                System.out.println("=================== We did it! =================");
+                System.out.println("=================== I did it! =================");
 
             } catch (JSONException e) {
                 System.err.println("Failed to parse JSON payload: " + e.getMessage());

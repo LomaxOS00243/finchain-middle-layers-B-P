@@ -31,10 +31,23 @@ public class DocumentController {
         String getMetadata = file.getOriginalFilename()+file.getContentType()+file.getSize();
 
         System.out.println("File metadata: "+getMetadata);
-        //Employee ID will be retrieved from the in memory storage using session id of this request
 
-        //Issue transaction to verify the employee is authorised to upload the document - Hardcoded employee id
-         employeeAuthServing.uploadDocument(getMetadata, "fin-Employee002", file.getName());
+        //Employee ID must be retrieved here in the server side using the session id that
+        //comes in the request header.
+        //Why? Because the employee ID is not available in the request body of the upload document request
+        //Reason: As the employee ID is the most sensitive data, it should not be sent for every request
+        //The client side only sends the file to be uploaded and the session id.
+
+
+        //For the sake of the demo, I hardcoded a registered ID to issue this transaction
+        //because the demo requires starting from the post-registration process
+        //and the server side is implemented with in memory data structure that get cleared
+        //when the server is restarted.
+
+        //Optionally, I can demo with the employee ID that I am currently registering and enrolling
+        // in the network. But there's a demo for the network response when a user is already post-registered
+        //and this ID user is used for that.
+         employeeAuthServing.uploadDocument(getMetadata, "fin-Employee011", file.getOriginalFilename());
 
         try {
             //Upload the document to the S3 bucket
