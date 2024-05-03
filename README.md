@@ -1,1 +1,2 @@
-# finchain-middle-layers-B-P
+# finchain-middle-layers
+Finchain business and persistance layers
